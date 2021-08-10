@@ -28,3 +28,7 @@
 .product-price {
     font-weight: bold;
 }
+
+.product-list-manager .table .name-field {
+    width: 50%;
+}
