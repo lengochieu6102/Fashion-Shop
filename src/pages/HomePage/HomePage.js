@@ -1,27 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ProductList from '../../components/ProductListView/ProductList';
 import ProductItem from '../../components/ProductListView/ProductItem';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { actFetchProductsRequest } from '../../actions/index';
+import { useEffect } from 'react';
 
-class HomePage extends Component {
+function HomePage(props) {
+    const products = useSelector(state => state.products);
+    const dispatch = useDispatch();
 
-    componentDidMount() {
-        this.props.fetchAllProducts();
-    }
+    useEffect(() => {
+        dispatch(actFetchProductsRequest());
+    }, [dispatch])
 
-    render() {
-        var { products } = this.props;
-        return (
-            <div className="home-page">
-                <ProductList>
-                    {this.showListProduct(products)}
-                </ProductList>
-            </div>
-        );
-    }
-
-    showListProduct = (products) => {
+    function showListProduct(products) {
         var result = null;
         result = products.map((product, index) => {
             return (
@@ -33,20 +25,14 @@ class HomePage extends Component {
         })
         return result;
     }
+
+    return (
+        <div className="home-page">
+            <ProductList>
+                {showListProduct(products)}
+            </ProductList>
+        </div>
+    );
 }
 
-const mapStateToProps = (state) => {
-    return {
-        products: state.products,
-    }
-}
-
-const mapDispatchToProps = (dispatch, props) => {
-    return {
-        fetchAllProducts: () => {
-            dispatch(actFetchProductsRequest());
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default HomePage;

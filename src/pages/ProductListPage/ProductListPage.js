@@ -1,28 +1,23 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ProductList from '../../components/ProductListManager/ProductList';
 import ProductItem from '../../components/ProductListManager/ProductItem';
 import { actFetchProductsRequest, actDeleteProductRequest } from '../../actions/index';
 
-class HomePage extends Component {
-    componentDidMount() {
-        this.props.fetchAllProducts();
+function ProductListPage(props) {
+    const products=useSelector(state => state.products);
+    const dispatch=useDispatch();
+
+    useEffect(() => {
+        dispatch(actFetchProductsRequest());
+    }, [dispatch]);
+
+    const onDelete=(id)=>  {
+        dispatch(actDeleteProductRequest(id));
     }
 
-    render() {
-        var { products } = this.props;
-        return (
-            <div className="product-list-manager">
-                <ProductList>
-                    {this.showProductManager(products)}
-                </ProductList>
-                <Link className="btn btn-primary" to="/product/add">Thêm sản phẩm</Link>
-            </div>
-        );
-    }
-
-    showProductManager = (products) => {
+    function showProductManager(products) {
         var result = null;
         result = products.map((product, index) => {
             return (
@@ -30,33 +25,21 @@ class HomePage extends Component {
                     key={index}
                     index={index}
                     product={product}
-                    onDelete={this.onDelete}
+                    onDelete={onDelete}
                 />
             )
         })
         return result;
     }
 
-    onDelete = (id) => {
-        this.props.onDeleteProduct(id);
-    }
+    return (
+        <div className="product-list-manager">
+            <ProductList>
+                {showProductManager(products)}
+            </ProductList>
+            <Link className="btn btn-primary" to="/product/add">Thêm sản phẩm</Link>
+        </div>
+    );
 }
 
-const mapStateToProps = (state) => {
-    return {
-        products: state.products,
-    }
-}
-
-const mapDispatchToProps = (dispatch, props) => {
-    return {
-        fetchAllProducts: () => {
-            dispatch(actFetchProductsRequest());
-        },
-        onDeleteProduct: (id) => {
-            dispatch(actDeleteProductRequest(id));
-        },
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default ProductListPage;

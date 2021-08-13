@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class ProductList extends Component {
-    render() {
-        return (
-            <div className="row">
-                {this.props.children}
-            </div>
-        );
-    }
+function ProductList(props) {
+    return (
+        <div className="row">
+            {props.children}
+        </div>
+    );
+
 
 }
 
