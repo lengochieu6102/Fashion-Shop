@@ -5,15 +5,15 @@ import ProductList from '../../components/ProductListManager/ProductList';
 import ProductItem from '../../components/ProductListManager/ProductItem';
 import { actFetchProductsRequest, actDeleteProductRequest } from '../../actions/index';
 
-function ProductListPage(props) {
-    const products=useSelector(state => state.products);
-    const dispatch=useDispatch();
 
+function ProductListPage(props) {
+    const products = useSelector(state => state.products);
+    const dispatch = useDispatch();
     useEffect(() => {
         dispatch(actFetchProductsRequest());
     }, [dispatch]);
 
-    const onDelete=(id)=>  {
+    const onDelete = (id) => {
         dispatch(actDeleteProductRequest(id));
     }
 
@@ -34,10 +34,17 @@ function ProductListPage(props) {
 
     return (
         <div className="product-list-manager">
-            <ProductList>
-                {showProductManager(products)}
-            </ProductList>
-            <Link className="btn btn-primary" to="/product/add">Thêm sản phẩm</Link>
+            {products.length === 0 ? (
+                <h3>Không có sản phẩm nào trong cửa hàng <Link to="/product/add">Thêm sản phẩm ngay</Link></h3>
+            ) : (<>
+                <h3 className="text-center">Danh sách sản phẩm</h3>
+                <Link className="btn btn-primary mb-1" to="/product/add"><i className="fas fa-plus"></i> Thêm sản phẩm</Link>
+                <ProductList>
+                    {showProductManager(products)}
+                </ProductList>
+            </>
+            )}
+
         </div>
     );
 }

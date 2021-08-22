@@ -1,10 +1,13 @@
+
 import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './App.css';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from './components/Header/Header';
 import routes from './routes';
+import Footer from './components/Footer/Footer';
 
 function App(props) {
+
     function showPage(routes) {
         var result = null;
         result = routes.map((route, index) => {
@@ -23,9 +26,10 @@ function App(props) {
         <Router>
             <div>
                 <Header></Header>
-                <div className="container">
+                <div className="container mt-5 mb-5">
                     {showPage(routes)}
                 </div>
+                <Footer></Footer>
             </div >
         </Router>
     );

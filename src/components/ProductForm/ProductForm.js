@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import FileBase from 'react-file-base64';
 
 function ProductForm(props) {
     const [editProduct, setEditProduct] = useState({
@@ -22,7 +23,6 @@ function ProductForm(props) {
             });
         }
     }, [props])
-
     const onChange = (e) => {
 
         var target = e.target;
@@ -37,6 +37,7 @@ function ProductForm(props) {
     const onSave = (e) => {
         e.preventDefault();
         var { id, txtName, txtPrice, txtImage, cbStatus } = editProduct;
+
         var product = {
             id: id,
             name: txtName,
@@ -49,6 +50,8 @@ function ProductForm(props) {
 
 
     var { txtName, txtPrice, txtImage, cbStatus } = editProduct;
+    console.log(txtImage);
+
     return (
         <div>
             <form onSubmit={onSave}>
@@ -79,12 +82,17 @@ function ProductForm(props) {
                 <div className="form-group row">
                     <label className="col-sm-2 col-form-label">Hình ảnh: </label>
                     <div className="col-sm-10">
-                        <input
-                            type="text"
-                            className="form-control"
-                            name="txtImage"
-                            onChange={onChange}
-                            value={txtImage}
+                        <FileBase
+                            type="file"
+                            multiple={false}
+                            onDone={({ base64, size }) => {
+                                if (size.split(' ')[0] > 80) {
+                                    alert("Pls upload image < 80kb")
+                                } else {
+                                    setEditProduct({ ...editProduct, txtImage: base64 });
+                                }
+                            }}
+
                         />
                     </div>
                 </div>

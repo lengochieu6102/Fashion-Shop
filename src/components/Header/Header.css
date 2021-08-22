@@ -1,0 +1,19 @@
+.profile {
+    display: flex;
+    justify-content: space-between;
+    width: 300px;
+}
+
+.profile .userName {
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    height: 40px;
+    border-radius: 50%;
+}
+
+.cart {
+    margin-right: 5px;
+}

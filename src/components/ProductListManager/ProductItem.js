@@ -7,6 +7,7 @@ function ProductItem(props) {
     var productStatus = product.status ? "Còn hàng" : "Hết hàng";
     
     const onDelete = (id) => {
+        
         if (window.confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
             props.onDelete(id);
         }
@@ -24,14 +25,14 @@ function ProductItem(props) {
                     className="btn btn-warning mr-2"
                     to={`/product/${product.id}/edit`}
                 >
-                    Chỉnh sửa
+                    <i className="fas fa-edit"></i> Chỉnh sửa 
                 </Link>
                 <button
                     type="button"
                     className="btn btn-danger"
                     onClick={() => onDelete(product.id)}
                 >
-                    Xóa
+                     <i className="fas fa-trash-alt"></i> Xóa
                 </button>
             </th>
         </tr>

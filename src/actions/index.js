@@ -75,3 +75,26 @@ export const actUpdateProduct = (product)=>{
         product,
     }
 }
+
+export const actAddToCart=(product,quantity)=>{
+    return {
+        type: Types.ADD_TO_CART,
+        product,
+        quantity,
+    }
+}
+
+export const actRemoveItemCart=(id)=>{
+    return {
+        type: Types.DELETE_ITEM_CART,
+        id,
+    }
+}
+
+export const actUpdateQuantity=(product,quantity)=>{
+    return {
+        type: Types.UPDATE_QUANTITY_ITEM,
+        product,
+        quantity,
+    }
+}
